@@ -55,7 +55,7 @@ class PopbillBase
     		{
     			$this->Token = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL,$CorpNum, $this->scopes);
     		}catch(LinkhubException $le) {
-    			throw new PopbillException($le->message,$le->code,$le);
+    			throw new PopbillException($le->getMessage(),$le->getCode(),$le);
     		}
     	}
     	
