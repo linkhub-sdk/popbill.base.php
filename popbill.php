@@ -92,7 +92,7 @@ class PopbillBase
     	}
     }
     
-    private function executeCURL($uri,$CorpNum = null,$userID = null,$isPost = false, $action = null, $postdata = null) {
+    protected function executeCURL($uri,$CorpNum = null,$userID = null,$isPost = false, $action = null, $postdata = null) {
 		$http = curl_init(($this->IsTest ? PopbillBase::ServiceURL_TEST : PopbillBase::ServiceURL_REAL).$uri);
 		$header = array();
 		
