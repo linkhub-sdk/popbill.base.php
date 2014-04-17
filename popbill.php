@@ -42,12 +42,9 @@ class PopbillBase
     	$this->scopes[] = 'member';
     }
     
-    public function IsTest($T) {
-    	$this->IsTest = $T;
-    }
-    protected function AddScope($scope) {
-    	$this->scopes[] = $scope;
-    }
+    public function IsTest($T) {$this->IsTest = $T;}
+
+    protected function AddScope($scope) {$this->scopes[] = $scope;}
     
     private function getsession_Token($CorpNum) {
     	
@@ -58,12 +55,9 @@ class PopbillBase
     	}
     	else {
     		$Expiration = new \DateTime($this->Token->expiration);
-    		
     		date_default_timezone_set('UTC'); 
     		$now = date("Y-m-d H:i:s",time());
-    		
     		$Refresh = $Expiration < $now; 
-    		
     	}
     	
     	if($Refresh) {
@@ -77,20 +71,20 @@ class PopbillBase
     	
     	return $this->Token->session_token;
     }
+ 
     //팝빌 연결 URL함수
     public function GetPopbillURL($CorpNum ,$UserID, $TOGO) {
-    	
     	$response = $this->executeCURL('/?TG='.$TOGO,$CorpNum,$UserID);
-    	
     	return $response->url;
-    	
     }
+ 
     //회원가입
     public function JoinMember($JoinForm) {
     	$postdata = json_encode($JoinForm);
-    		return $this->executeCURL('/Join',null,null,true,null,$postdata);
+   		return $this->executeCURL('/Join',null,null,true,null,$postdata);
     	
     }
+ 
     //회원 잔여포인트 확인
     public function GetBalance($CorpNum) {
     	try {
@@ -99,6 +93,7 @@ class PopbillBase
     		throw new PopbillException($le->message,$le->code,$le);
     	}
     }
+ 
     //파트너 잔여포인트 확인
     public function GetPartnerBalance($CorpNum) {
     	try {
@@ -132,7 +127,6 @@ class PopbillBase
 		curl_setopt($http, CURLOPT_RETURNTRANSFER, TRUE);
 		
 		$responseJson = curl_exec($http);
-		
 		$http_status = curl_getinfo($http, CURLINFO_HTTP_CODE);
 		
 		curl_close($http);
@@ -177,6 +171,5 @@ class PopbillException extends \Exception
     public function __toString() {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
-
 }
 ?>
