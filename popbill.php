@@ -50,7 +50,23 @@ class PopbillBase
     }
     
     private function getsession_Token($CorpNum) {
+    	
+    	$Refresh = false;
+    	
     	if(is_null($this->Token)) {
+    		$Refresh = true;
+    	}
+    	else {
+    		$Expiration = new \DateTime($this->Token->expiration);
+    		
+    		date_default_timezone_set('UTC'); 
+    		$now = date("Y-m-d H:i:s",time());
+    		
+    		$Refresh = $Expiration < $now; 
+    		
+    	}
+    	
+    	if($Refresh) {
     		try
     		{
     			$this->Token = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL,$CorpNum, $this->scopes);
