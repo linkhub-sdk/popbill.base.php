@@ -103,7 +103,7 @@ class PopbillBase
     	}
     }
     
-    protected function executeCURL($uri,$CorpNum = null,$userID = null,$isPost = false, $action = null, $postdata = null) {
+    protected function executeCURL($uri,$CorpNum = null,$userID = null,$isPost = false, $action = null, $postdata = null,$isMultiPart=false) {
 		$http = curl_init(($this->IsTest ? PopbillBase::ServiceURL_TEST : PopbillBase::ServiceURL_REAL).$uri);
 		$header = array();
 		
@@ -116,8 +116,9 @@ class PopbillBase
 		if(is_null($action) == false) {
 			$header[] = 'X-HTTP-Method-Override: '.$action;
 		}
-		$header[] = 'Content-Type: Application/json';
-		
+		if($isMultiPart == false) {
+			$header[] = 'Content-Type: Application/json';
+		}
 		
 		if($isPost) {
 			curl_setopt($http, CURLOPT_POST,1);
