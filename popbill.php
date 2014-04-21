@@ -65,7 +65,7 @@ class PopbillBase
     		{
     			$this->Token = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL,$CorpNum, $this->scopes);
     		}catch(LinkhubException $le) {
-    			throw new PopbillException($le->getMessage(),$le->getCode(),$le);
+    			throw new PopbillException($le->getMessage(),$le->getCode());
     		}
     	}
     	
@@ -90,7 +90,7 @@ class PopbillBase
     	try {
     		return $this->Linkhub->getBalance($this->getsession_Token($CorpNum),$this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL);
     	}catch(LinkhubException $le) {
-    		throw new PopbillException($le->message,$le->code,$le);
+    		throw new PopbillException($le->message,$le->code);
     	}
     }
  
@@ -99,7 +99,7 @@ class PopbillBase
     	try {
     		return $this->Linkhub->getPartnerBalance($this->getsession_Token($CorpNum),$this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL);
     	}catch(LinkhubException $le) {
-    		throw new PopbillException($le->message,$le->code,$le);
+    		throw new PopbillException($le->message,$le->code);
     	}
     }
     
@@ -159,10 +159,10 @@ class JoinForm
 
 class PopbillException extends \Exception
 {
-	public function __construct($response, Exception $previous = null) {
+	public function __construct($response,$code = -99999999, Exception $previous = null) {
        $Err = json_decode($response);
        if(is_null($Err)) {
-       		parent::__construct($response, -99999999, $previous);
+       		parent::__construct($response, $code , $previous);
        }
        else {
        		parent::__construct($Err->message, $Err->code, $previous);
