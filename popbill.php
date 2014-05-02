@@ -16,13 +16,8 @@
 * We welcome any suggestions, feedbacks, blames or anythings.
 * ======================================================================================
 */
-namespace Popbill;
 
 require_once 'Linkhub/linkhub.auth.php';
-use Linkhub\Linkhub;
-use Linkhub\Token;
-use Linkhub\LinkhubException;
-
 
 class PopbillBase
 {
@@ -157,15 +152,15 @@ class JoinForm
 	public $PWD;
 }
 
-class PopbillException extends \Exception
+class PopbillException extends Exception
 {
 	public function __construct($response,$code = -99999999, Exception $previous = null) {
        $Err = json_decode($response);
        if(is_null($Err)) {
-       		parent::__construct($response, $code , $previous);
+       		parent::__construct($response, $code );
        }
        else {
-       		parent::__construct($Err->message, $Err->code, $previous);
+       		parent::__construct($Err->message, $Err->code);
        }
     }
 

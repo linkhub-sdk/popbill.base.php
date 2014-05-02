@@ -1,9 +1,6 @@
 <?php
 
 require_once 'popbill.php';
-use Popbill\PopbillBase;
-use Popbill\JoinForm;
-use Popbill\PopbillException;
 
 $PartnerID = 'TESTER';
 $SecretKey = 'okH3G1/WZ3w1PMjHDLaWdcWIa/dbTX3eGuqMZ5AvnDE=';
