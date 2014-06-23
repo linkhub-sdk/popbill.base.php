@@ -32,8 +32,8 @@ class PopbillBase
     private $IsTest = false;
     private $scopes = array();
     
-    public function __construct($PartnerID,$SecretKey) {
-    	$this->Linkhub = Linkhub::getInstance($PartnerID,$SecretKey);
+    public function __construct($LinkID,$SecretKey) {
+    	$this->Linkhub = Linkhub::getInstance($LinkID,$SecretKey);
     	$this->scopes[] = 'member';
     }
     
@@ -137,7 +137,7 @@ class PopbillBase
 
 class JoinForm 
 {
-	public $PartnerID;
+	public $LinkID;
 	public $CorpNum;
 	public $CEOName;
 	public $CorpName;
