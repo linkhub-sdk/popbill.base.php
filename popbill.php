@@ -72,7 +72,11 @@ class PopbillBase
     	$response = $this->executeCURL('/?TG='.$TOGO,$CorpNum,$UserID);
     	return $response->url;
     }
- 
+    
+ 	//가입여부 확인
+ 	public function CheckIsMember($CorpNum , $LinkID) {
+ 		return $this->executeCURL('/Join?CorpNum='.$CorpNum.'&LID='.$LinkID);
+ 	}
     //회원가입
     public function JoinMember($JoinForm) {
     	$postdata = json_encode($JoinForm);
