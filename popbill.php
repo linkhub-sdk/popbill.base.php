@@ -27,7 +27,7 @@ class PopbillBase
     const ServiceURL_TEST = 'https://popbill_test.linkhub.co.kr';
     const Version = '1.0';
     
-    private $Token = null;
+    private $Token_Table = array();
     private $Linkhub;
     private $IsTest = false;
     private $scopes = array();
@@ -43,13 +43,19 @@ class PopbillBase
     
     private function getsession_Token($CorpNum) {
     	
+        $targetToken = null;
+
+        if(array_key_exists($CorpNum, $this->Token_Table)) {
+            $targetToken = $this->Token_Table[$CorpNum];
+        }
+
     	$Refresh = false;
     	
-    	if(is_null($this->Token)) {
+    	if(is_null($targetToken)) {
     		$Refresh = true;
     	}
     	else {
-    		$Expiration = new DateTime($this->Token->expiration);
+    		$Expiration = new DateTime($targetToken->expiration);
     		date_default_timezone_set('UTC'); 
     		$now = date("Y-m-d H:i:s",time());
     		$Refresh = $Expiration < $now; 
@@ -58,13 +64,14 @@ class PopbillBase
     	if($Refresh) {
     		try
     		{
-    			$this->Token = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL,$CorpNum, $this->scopes);
+    			$targetToken = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL,$CorpNum, $this->scopes);
     		}catch(LinkhubException $le) {
     			throw new PopbillException($le->getMessage(),$le->getCode());
     		}
+            $this->Token_Table[$CorpNum] = $targetToken;
     	}
     	
-    	return $this->Token->session_token;
+    	return $targetToken->session_token;
     }
  
     //팝빌 연결 URL함수

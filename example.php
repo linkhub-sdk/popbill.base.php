@@ -3,7 +3,7 @@
 require_once 'popbill.php';
 
 $LinkID = 'TESTER';
-$SecretKey = 'okH3G1/WZ3w1PMjHDLaWdcWIa/dbTX3eGuqMZ5AvnDE=';
+$SecretKey = 'koHkuukeNY+AO52II2m/e23WdSiKCs0UeeHTWYEES0c=';
 
 
 $PopbillService = new PopbillBase($LinkID,$SecretKey);
@@ -15,6 +15,9 @@ echo chr(10);
 
 echo $PopbillService->GetBalance('1231212312');
 echo chr(10);
+echo $PopbillService->GetBalance('4108600477');
+echo chr(10);
+
 echo $PopbillService->GetPartnerBalance('1231212312');
 echo chr(10);
 
