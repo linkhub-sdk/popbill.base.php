@@ -55,12 +55,9 @@ class PopbillBase
     		$Refresh = true;
     	}
     	else {
-    		$Expiration = new DateTime($targetToken->expiration);
-            $timezone = @date_default_timezone_get();
-    		date_default_timezone_set('UTC'); 
-    		$now = date("Y-m-d H:i:s",time());
-            date_default_timezone_set($timezone);
-    		$Refresh = $Expiration < $now; 
+            $Expiration = new DateTime($targetToken->expiration,new DateTimeZone("UTC"));
+            $now = gmdate("Y-m-d H:i:s",time());
+            $Refresh = $Expiration < $now; 
     	}
     	
     	if($Refresh) {
